@@ -18,7 +18,59 @@ class AuthService {
   Future<AuthResponse> verifyOtp(String phone, String token) =>
       db.auth.verifyOTP(phone: phone, token: token, type: OtpType.sms);
 
+  // ─────── EMAIL AUTHENTICATION ──────
+  /// Sign up with email and password
+  Future<AuthResponse> signUpWithEmail(String email, String password) async {
+    try {
+      final response = await db.auth.signUp(
+        email: email,
+        password: password,
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Email sign up failed: ${e.toString()}');
+    }
+  }
+
+  /// Sign in with email and password
+  Future<AuthResponse> signInWithEmail(String email, String password) async {
+    try {
+      final response = await db.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Email sign in failed: ${e.toString()}');
+    }
+  }
+
+  /// Send password reset email
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await db.auth.resetPasswordForEmail(email);
+    } catch (e) {
+      throw Exception('Password reset failed: ${e.toString()}');
+    }
+  }
+
+  /// Verify email OTP (if using email OTP instead of password)
+  Future<AuthResponse> verifyEmailOtp(String email, String token) async {
+    try {
+      final response = await db.auth.verifyOTP(
+        email: email,
+        token: token,
+        type: OtpType.email,
+      );
+      return response;
+    } catch (e) {
+      throw Exception('Email verification failed: ${e.toString()}');
+    }
+  }
+
   String? get userId => db.auth.currentUser?.id;
+  String? get userEmail => db.auth.currentUser?.email;
+  String? get userPhone => db.auth.currentUser?.phone;
 
   Future<void> createProfile({
     required String role, // 'worker' | 'employer'
@@ -33,6 +85,7 @@ class AuthService {
       'role': role,
       'full_name': fullName,
       'phone': db.auth.currentUser!.phone,
+      'email': db.auth.currentUser!.email,
       'nrc_number': nrcNumber,
       'preferred_language': language,
       'town': town,
