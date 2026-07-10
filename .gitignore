@@ -37,3 +37,20 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+
+# Android signing keys (NEVER commit these)
+android/key.properties
+*.keystore
+*.jks
+
+# Android generated files
+android/.gradle/
+android/app/google-services.json
+android/local.properties
+
+# Flutter build artifacts
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
