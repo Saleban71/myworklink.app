@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "buildCommand": "flutter build web",
+  "outputDirectory": "build/web",
+  "env": {
+    "FLUTTER_VERSION": "3.22.0"
+  },
+  "functions": {
+    "api": "api"
+  }
+}
