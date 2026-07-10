@@ -1,0 +1,11 @@
+Repository
+│
+├── frontend
+│   ├── package.json
+│   ├── next.config.js
+│   ├── app/
+│   └── ...
+│
+└── backend
+    ├── package.json
+    └── ...
