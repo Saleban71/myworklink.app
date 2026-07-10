@@ -73,141 +73,61 @@ Wait 2-3 minutes, then:
 
 ## 📱 Android Deployment (Google Play)
 
+> 📖 **For the full step-by-step Android guide**, see **[ANDROID_DEPLOYMENT_GUIDE.md](./ANDROID_DEPLOYMENT_GUIDE.md)**
+
+### Quick Overview
+
+| Step | Action | Time |
+|------|--------|------|
+| 1 | Google Play Developer Account ($25) | 30 min |
+| 2 | Generate signing keystore | 5 min |
+| 3 | Configure `android/key.properties` | 2 min |
+| 4 | Build release AAB | 5-15 min |
+| 5 | Create Play Store listing | 30 min |
+| 6 | Submit for review | 5 min |
+| 7 | Wait for approval | 1-7 days |
+
 ### Prerequisites
 
-- ✅ Google Play Developer account ($25 one-time)
+- ✅ Google Play Developer account ($25 one-time fee)
 - ✅ Merchant account (for payments)
-- ✅ App signing certificate
+- ✅ App signing certificate (keystore)
+- ✅ Firebase `google-services.json` (for push notifications)
 
-### Step 1: Google Play Developer Account
-
-1. **Go to**: https://play.google.com/apps/publish
-2. **Sign in** with Google account
-3. **Pay** $25 one-time fee
-4. **Complete** merchant account setup
-
-### Step 2: Generate Signing Certificate
-
-**First time only:**
+### Generate Signing Certificate
 
 ```bash
-# Generate keystore
 keytool -genkey -v -keystore ~/worklink.keystore \
-    -keyalg RSA \
-    -keysize 2048 \
-    -validity 10000 \
+    -keyalg RSA -keysize 2048 -validity 10000 \
     -alias worklink_key
-
-# When prompted, enter:
-# Password: (save securely!)
-# Name: Your Name
-# Organization: WorkLink
-# City: Lusaka
-# State: Lusaka
-# Country: ZM
 ```
 
-**Verify creation:**
+⚠️ **Back up your keystore file** — losing it means you can't update the app!
+
+### Configure Signing
+
+Copy the example and fill in your paths and passwords:
+
 ```bash
-ls -la ~/worklink.keystore
+cp android/key.properties.example android/key.properties
+# Edit android/key.properties with your actual keystore path and passwords
 ```
 
-⚠️ **Save this file securely** - you'll need it for future updates!
-
-### Step 3: Configure Android Build
-
-**Create `android/key.properties`:**
-
-```properties
-storeFile=/Users/YOUR_USERNAME/worklink.keystore
-storePassword=YOUR_PASSWORD
-keyPassword=YOUR_PASSWORD
-keyAlias=worklink_key
-```
-
-**Update `android/app/build.gradle`:**
-
-```gradle
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
-
-android {
-    compileSdkVersion 34
-
-    defaultConfig {
-        applicationId "com.worklink.app"
-        minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 1
-        versionName "1.0.0"
-    }
-
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-    }
-
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
-        }
-    }
-}
-```
-
-### Step 4: Build Release APK
+### Build Release AAB
 
 ```bash
 flutter clean
 flutter pub get
-flutter build apk --release
+flutter build appbundle --release
 ```
 
-**Output**: `build/app/outputs/apk/release/app-release.apk`
-
-### Step 5: Create Play Store Listing
-
-1. **Google Play Console** → **Create App**
-2. **Fill in**:
-   - App name: "WorkLink"
-   - Default language: English
-   - App type: Application
-   - Category: Business
-
-3. **Go to**: **Release** → **Production**
-4. **Upload** `app-release.apk`
-5. **Fill in**: Title, description, screenshots
-
-### Step 6: Add App Content
-
-1. **Content Rating**:
-   - App questionnaire
-   - Select appropriate rating
-
-2. **Target Audience**:
-   - Select: "Adults"
-   - Workers and employers 18+
-
-3. **Privacy Policy**:
-   - Link to your privacy policy
-
-### Step 7: Review & Submit
-
-1. **Review** all information
-2. **Check** pricing (Free)
-3. **Submit** for review
-4. **Wait** 2-4 hours for approval
+**Output**: `build/app/outputs/bundle/release/app-release.aab`
 
 ### Result
 
 ✅ App available on Google Play Store
+
+→ **Full instructions**: [ANDROID_DEPLOYMENT_GUIDE.md](./ANDROID_DEPLOYMENT_GUIDE.md)
 
 ---
 
@@ -373,8 +293,10 @@ flutter clean
 java -version  # Should be 11+
 
 # Rebuild
-flutter build apk --release -v
+flutter build appbundle --release -v
 ```
+
+→ **More Android troubleshooting**: [ANDROID_DEPLOYMENT_GUIDE.md#11-troubleshooting](./ANDROID_DEPLOYMENT_GUIDE.md#11-troubleshooting)
 
 ### iOS Build Fails
 

@@ -1,0 +1,16 @@
+# Android Release Signing Key Properties
+# =========================================
+# Copy this file to android/key.properties and fill in your keystore details.
+# IMPORTANT: Never commit android/key.properties to version control!
+#
+# Generate your keystore with:
+#   keytool -genkey -v -keystore ~/worklink.keystore \
+#       -keyalg RSA -keysize 2048 -validity 10000 \
+#       -alias worklink_key
+#
+# Then fill in the values below:
+
+storeFile=/Users/YOUR_USERNAME/worklink.keystore
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=worklink_key
