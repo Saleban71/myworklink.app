@@ -2,10 +2,5 @@
   "name": "myworklink-app",
   "version": "1.0.0",
   "description": "App for informal workers in Zambia and Africa region",
-  "private": true,
-  "scripts": {
-    "dev": "http-server",
-    "build": "echo 'Static site, no build needed'",
-    "start": "http-server"
-  }
+  "private": true
 }
