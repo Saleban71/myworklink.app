@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 /* ============================================================
    WorkLink — Interactive Prototype (Phase 1 flows from PRD v1.0)
