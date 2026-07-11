@@ -1,11 +1,10 @@
 {
   "version": 2,
   "buildCommand": "",
-  "outputDirectory": "public",
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
