@@ -1,7 +1,18 @@
 {
   "version": 2,
-  "buildCommand": "",
+  "buildCommand": "echo 'Static HTML deployment - no build needed'",
   "outputDirectory": ".",
-  "cleanUrls": true,
-  "trailingSlash": false
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/:path((?!.*\\.).*)",
+      "destination": "/index.html"
+    }
+  ]
 }
