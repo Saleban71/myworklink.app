@@ -2,10 +2,6 @@
   "version": 2,
   "buildCommand": "",
   "outputDirectory": ".",
-  "public": true,
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }
