@@ -1,0 +1,7 @@
+next.config.js
+package-lock.json
+node_modules
+.git
+.env
+.env.*
+*.md
