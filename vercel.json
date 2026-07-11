@@ -1,6 +1,8 @@
 {
   "version": 2,
+  "buildCommand": "",
   "outputDirectory": ".",
+  "functions": {},
   "routes": [
     { "src": "/", "dest": "/index.html" },
     { "handle": "filesystem" },
